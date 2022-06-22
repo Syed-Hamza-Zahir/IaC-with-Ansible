@@ -85,6 +85,69 @@ We saw that all means 'all hosts', but ansible provides a lot of other ways to s
 - ``host0.example.org:host1.example.org`` would run on host0.example.org and host1.example.org
 - ``host*.example.org`` would run on all hosts starting with 'host' and ending with '.example.org'
 
+# Yaml file to provision web server
+```
+---
+
+
+- hosts: web
+  gather_facts: yes
+  become: true
+
+  tasks:
+  - name: Update and upgrade apt packages
+    become: true
+    apt:
+      upgrade: yes
+      update_cache: yes
+
+  - name: Copy app into web virtual machine
+    synchronize:
+      src: ~/eng114_devops
+      dest: /home/vagrant
+
+  - name: install nginx
+    apt: name=nginx state=present
+
+  - name: Reverse proxy
+    copy:
+      src: ~/eng114_devops/default
+      dest: /etc/nginx/sites-available/default
+
+  - name: install git
+    apt: name=git state=present
+
+  - name: Add Nodesource Keys
+      become: yes
+    apt_key:
+      url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+      state: present
+
+  - name: Add Nodesource Apt Sources
+    become: yes
+    apt_repository:
+      repo: '{{ item }}'
+      state: present
+    with_items:
+      - 'deb https://deb.nodesource.com/node_6.x xenial main'
+      - 'deb-src https://deb.nodesource.com/node_6.x xenial main'
+
+  - name: Install NodeJS
+    become: yes
+    apt:
+      name: nodejs
+      state: latest
+      update_cache: yes
+
+  - name: Install NPM
+    apt: pkg=npm state=present
+
+
+  - name: install pm2
+    npm:
+      name: pm2
+      global: yes
+```
 
 
 
