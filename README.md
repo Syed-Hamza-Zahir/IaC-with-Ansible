@@ -27,7 +27,7 @@ These are a few popular choices:
 - Progress Chef - Progress Chef is a configuration management tool written in Ruby and Erlang.
 - Puppet - Puppet is an open source software configuration management and deployment tool. It'sused to pull the strings on multiple application servers at once. B
 - Red Hat Ansible Automation Platform - 
-- Saltstack - 
+- Saltstack - Salt is Python-based, open-source software for event-driven IT automation, remote task execution, and configuration management.
 - Terraform - HashiCorp Terraform is an open source infrastructure as code (IaC) software tool that allows DevOps engineers to programmatically provision the physical resources an application requires to run. 
 - AWS CloudFormation - 
 - Ansible 
