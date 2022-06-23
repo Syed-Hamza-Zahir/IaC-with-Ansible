@@ -149,7 +149,22 @@ We saw that all means 'all hosts', but ansible provides a lot of other ways to s
       global: yes
 ```
 
+Run the following to get the lastest versions of npm and node on the web machine 
+```
+- sudo npm start
 
+- sudo npm i
+
+- sudo rm -rf node_modules/
+
+- sudo npm install -g npm@lastest
+
+- sudo n stable
+
+- sudo npm install -g n
+
+-  npm cache clean -g n
+```
 
 
 
