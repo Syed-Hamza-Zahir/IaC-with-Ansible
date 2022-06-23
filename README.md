@@ -96,7 +96,7 @@ We saw that all means 'all hosts', but ansible provides a lot of other ways to s
 
   tasks:
   - name: Update and upgrade apt packages
-    become: true
+    
     apt:
       upgrade: yes
       update_cache: yes
@@ -118,13 +118,13 @@ We saw that all means 'all hosts', but ansible provides a lot of other ways to s
     apt: name=git state=present
 
   - name: Add Nodesource Keys
-      become: yes
+      
     apt_key:
       url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
       state: present
 
   - name: Add Nodesource Apt Sources
-    become: yes
+    
     apt_repository:
       repo: '{{ item }}'
       state: present
@@ -133,7 +133,7 @@ We saw that all means 'all hosts', but ansible provides a lot of other ways to s
       - 'deb-src https://deb.nodesource.com/node_6.x xenial main'
 
   - name: Install NodeJS
-    become: yes
+    
     apt:
       name: nodejs
       state: latest
