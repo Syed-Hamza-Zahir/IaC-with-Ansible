@@ -1,0 +1,19 @@
+---
+- hosts: web
+  gather_facts: yes
+  become: true
+
+  #reverse proxy by replacing default file
+  #restart nginx so it uses new config
+  tasks:
+  - name: delete file
+    file:
+      path: /etc/nginx/sites-available/default
+      state: absent
+  - name: replace file
+    become: true
+    copy:
+      src: default
+      dest: /etc/nginx/sites-available
+  - name: restart nginx
+    service: name=nginx state=restarted enabled=yes
