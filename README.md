@@ -165,7 +165,12 @@ Run the following to get the lastest versions of npm and node on the web machine
 
 -  npm cache clean -g n
 ```
+## Provision ec2 from local controller through ansible
 
+
+Step 1: Add the eng114.pem file in to ~/.ssh folder so that ansible can authenticate with aws and create an ssh key-pair here.
+
+Step 2: create a group_vars/all/pass.yml using the command `ansible-create
 
 
 
