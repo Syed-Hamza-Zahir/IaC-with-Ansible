@@ -1,0 +1,12 @@
+---
+- hosts: web
+  gather_facts: yes
+  become: true
+
+  #copy app folder over
+  tasks:
+  - name: copy app over
+    become: true
+    copy:
+      src: app
+      dest: .
