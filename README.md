@@ -168,9 +168,64 @@ Run the following to get the lastest versions of npm and node on the web machine
 ## Provision ec2 from local controller through ansible
 
 
-Step 1: Add the eng114.pem file in to ~/.ssh folder so that ansible can authenticate with aws and create an ssh key-pair here.
 
-Step 2: create a group_vars/all/pass.yml using the command `ansible-create
+## Setting up the controller machine on Vagrant
+
+Configure the Vagrantfile as I have - use the exact configuration from line 79 onwards including leaving the comments the way they are. Make sure all other configurations above are commented out.
+
+Once we have run the `vagrant up` command in the right place, we should have 3 machines running. Machine names should be controller, app and db.
+
+SSH into each machine using `vagrant ssh machinename`
+
+Run `sudo apt-get update -y` and then run `sudo apt-get upgrade -y`. The upgrade command may take a while on each machine.
+
+Exit all machines and SSH into the `controller`
+
+Once inside run the following commands:
+        
+        sudo apt-get update
+	
+        sudo apt-get install software-properties-common
+	
+        sudo apt-add-repository ppa:ansible/ansible
+	
+        sudo apt-get update -y
+	
+        sudo apt-get install ansible -y
+
+       
+Once this is done check the version by running `ansible --version`
+
+To SSH into the web or db from the controller
+- `ssh vagrant@private.ip.of.web` - To SSH into the web machine
+- `ssh vagrant@private.ip.of.db` - To SSH into the db machine
+- When/if prompted type `yes`
+- Enter the password
+- When inside run `sudo apt-get update -y` to ensure the machine has internet access
+- When you exit the machine you should land back in the controller machine.
+- You need to do these steps otherwise the next ones wont work.
+
+Navigate to /etc/ansible
+
+Run `ls` to ensure there is a file called `hosts`
+
+`sudo nano hosts`
+
+Enter the following to set up connections to the web and db machines using the private ip - I put them both directly under EX 2.
+
+Can put web one under EX2 and db one under EX 3
+
+        [web]
+        web.private.ip ansible_connection=ssh ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
+ 
+        [db]
+        db.private.ip ansible_connection=ssh ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
+
+To check the connections from the controller machine run the commands
+
+- `sudo ansible all -m ping --ask-vault-pass` - all hosts
+- `sudo ansible web -m ping --ask-vault-pass` - web machine
+- `sudo ansible db -m ping --ask-vault-pass` - db machine
 
 
 
