@@ -1,0 +1,15 @@
+- hosts: all
+  become: yes
+  gather_facts: yes
+  tasks:
+  - name: "Get service status"
+    service_facts:
+  - name: "Check the service state"
+    debug:
+      msg: "{{ansible_facts.services['nginx.service'].state}}"
+  - name: "Check if nginx is running"
+    assert:
+      that:
+        - "'{{ansible_facts.services['nginx.service'].state}}' == 'running'"
+      fail_msg: "Nginx is down"
+      success_msg: "Nginx is up"
